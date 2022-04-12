@@ -1,0 +1,30 @@
+#include <string.h>
+void	*memccpy(void *restrict dst, const void *restrict src, int c, size_t n);
+void	*memccpy(void *dst, const void *src, int c, size_t n);
+
+RETURN VALUE
+The function returns a pointer to the next character in [dst] after [c], or NULL
+if [c] was not found in the first [n] characters of [src].
+
+DESCRIPTION
+The function copies bytes from string [src] to string [dst].
+If the character [c] (as converted an unsigned char) occurs in the string [src],
+the copy stops and a pointer to the byte after the copy of [c] in the string [dst] is returned.
+
+The function copies no more than [n] bytes from memory area [src] to memory area [dst],
+stopping when the charater [c] is found.
+
+The [src] and [dst] strings should not overlap, as the behavior is undefined.
+
+RESULT
+dest[30] = 12345678901234567890123456789 [0x7ff7b3a88980] ~ [0x7ff7b3a8899d]
+src[20]  = copy zone:not copy.           [0x7ff7b3a88960] ~ [0x7ff7b3a88973]
+
+memccpy(dest, src, ':', 15)
+dest[30] = copy zone:1234567890123456789
+return_p = 1                             [0x7ff7b3a8898a]
+
+memccpy(dest, src, ',', 15)
+dest[30] = copy zone:not c67890123456789
+return is NULL.
+
