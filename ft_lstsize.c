@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnoguchi <hnoguchi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 15:40:08 by hnoguchi          #+#    #+#             */
-/*   Updated: 2022/05/11 19:26:44 by hnoguchi         ###   ########.fr       */
+/*   Created: 2022/04/28 21:20:47 by hnoguchi          #+#    #+#             */
+/*   Updated: 2022/05/11 16:23:52 by hnoguchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+int	ft_lstsize(t_list *lst)
 {
-	unsigned int	i;
-	size_t			len;
-	char			*str;
+	int		i;
 
-	if (s == NULL)
-		return (NULL);
-	i = 0;
-	len = ft_strlen(s);
-	str = ft_strdup(s);
-	if (str == NULL)
-		return (NULL);
-	if (f != NULL || len <= UINT_MAX)
+	if (lst == NULL)
+		return (0);
+	i = 1;
+	while (lst->next != NULL && i < INT_MAX)
 	{
-		while (i < len)
-		{
-			str[i] = f(i, str[i]);
-			i += 1;
-		}
+		lst = lst->next;
+		i += 1;
 	}
-	return (str);
+	if (i == INT_MAX && lst->next != NULL)
+		return (-1);
+	return (i);
 }
